@@ -11,20 +11,21 @@ using System;
 namespace AngularASPNETCore2WebApiAuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180104134211_initial")]
-    partial class initial
+    [Migration("20180406175755_initial_create")]
+    partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
+                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
             modelBuilder.Entity("AngularASPNETCore2WebApiAuth.Models.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36);
 
                     b.Property<int>("AccessFailedCount");
 
@@ -46,6 +47,9 @@ namespace AngularASPNETCore2WebApiAuth.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(256);
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
@@ -59,6 +63,9 @@ namespace AngularASPNETCore2WebApiAuth.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("PictureUrl");
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(256);
 
                     b.Property<string>("SecurityStamp");
 
@@ -74,8 +81,7 @@ namespace AngularASPNETCore2WebApiAuth.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -118,8 +124,7 @@ namespace AngularASPNETCore2WebApiAuth.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
